@@ -2,8 +2,10 @@
 
 import React from "react";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 export default function JoinMisson() {
+  const router=useRouter()
   return (
     <section className="min-h-fit bg-gradient-to-b from-white to-amber-50 py-16 px-6 md:px-12">
       <div className="max-w-6xl mx-auto text-center">
@@ -17,11 +19,11 @@ export default function JoinMisson() {
           wisdom, compassion, and shared purpose.
         </p>
         <div className="flex gap-2 justify-center flex-wrap">
-          <Button className="bg-amber-600 hover:bg-amber-700 cursor-pointer py-4">
+          <Button onClick={()=>router.push("/membership")} className="bg-amber-600 hover:bg-amber-700 cursor-pointer py-4">
             Become a Member
           </Button>
-          <Button>Partner with WHV</Button>
-          <Button className="bg-white hover:bg-white/50 text-black border-1 border-black rounded-2xl cursor-pointer">
+          <Button onClick={()=>router.push("/membership")} >Partner with WHV</Button>
+          <Button onClick={()=>router.push("/volunteer-register")}  className="bg-white hover:bg-white/50 text-black border-1 border-black rounded-2xl cursor-pointer">
             Volunteer Opportunities
           </Button>
         </div>

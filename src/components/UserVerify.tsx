@@ -45,7 +45,7 @@ export default function VerifyUser() {
         }
       } catch (err) {
         console.error("❌ User verification failed:", err);
-        router.push("/login");
+        // router.push("/login");
       } finally {
         setIsLoading(false);
       }

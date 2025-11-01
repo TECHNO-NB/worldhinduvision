@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import axios from "axios";
 
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function MembershipPage() {
   const [fullName, setFullName] = useState("");
@@ -17,6 +19,7 @@ export default function MembershipPage() {
   const [occupation, setOccupation] = useState("");
   const [address, setAddress] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+
   const [membershipTier, setMembershipTier] = useState<
     "silver" | "gold" | "platinum"
   >("silver");
@@ -25,6 +28,9 @@ export default function MembershipPage() {
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
+
+  const userData =useSelector((state:any)=> state.user);
+  const router=useRouter();
   const tierPrices: Record<string, string> = {
     silver: "$50",
     gold: "$100",
@@ -46,12 +52,18 @@ export default function MembershipPage() {
   }
 
   async function handleSubmit(e: FormEvent) {
+
+    if(!userData || !userData.id){
+      router.push("/login")
+      toast.error("User must be login.");
+      return;
+    }
     e.preventDefault();
     setSubmitting(true);
     setSuccessMsg(null);
 
     if (!fullName.trim() || !contactNumber.trim()) {
-      alert("Please fill at least Full Name and Contact Number.");
+      toast.error("Please fill at least Full Name and Contact Number.");
       setSubmitting(false);
       return;
     }

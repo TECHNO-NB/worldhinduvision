@@ -8,7 +8,7 @@ import {
   ImageIcon,
   HousePlus,
   Bell,
-  UserStar 
+  UserStar,SquarePlay  
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -20,6 +20,7 @@ const Sidebar = () => {
     { name: "Gallery & Highlights", href: "/admin/gallery", icon: ImageIcon },
     { name: "Temples", href: "/admin/temple", icon: HousePlus },
     { name: "Membership", href: "/admin/membership", icon: UserStar  },
+    { name: "Vlog", href: "/admin/vlog", icon: SquarePlay   },
   ];
 
   return (

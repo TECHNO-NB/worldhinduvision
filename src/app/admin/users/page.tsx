@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface User {
-  _id: string;
+  id: string;
   fullName: string;
   email: string;
   phoneNumber: string;
@@ -71,19 +71,19 @@ export default function UsersPage() {
     try {
       if (confirmAction.type === "delete") {
         await axios.delete(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/${confirmAction.user._id}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/admin/delete-user/${confirmAction.user.id}`
         );
         setUsers((prev) =>
-          prev.filter((u) => u._id !== confirmAction.user?._id)
+          prev.filter((u) => u.id !== confirmAction.user?.id)
         );
         toast.success("User deleted!");
       } else if (confirmAction.type === "approve") {
         await axios.put(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/${confirmAction.user._id}/approve-volunteer`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/admin/approve-user/${confirmAction.user.id}`
         );
         setUsers((prev) =>
           prev.map((u) =>
-            u._id === confirmAction.user?._id
+            u.id === confirmAction.user?.id
               ? { ...u, volunteerApproved: true }
               : u
           )
@@ -91,12 +91,12 @@ export default function UsersPage() {
         toast.success("Volunteer approved!");
       } else if (confirmAction.type === "role") {
         await axios.put(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/${confirmAction.user._id}/role`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/admin/update-user/${confirmAction.user.id}`,
           { role: confirmAction.newRole }
         );
         setUsers((prev) =>
           prev.map((u) =>
-            u._id === confirmAction.user?._id
+            u.id === confirmAction.user?.id
               ? { ...u, role: confirmAction.newRole! }
               : u
           )
@@ -174,7 +174,7 @@ export default function UsersPage() {
           </thead>
           <tbody>
             {filteredUsers().map((user) => (
-              <tr key={user._id} className="hover:bg-gray-50">
+              <tr key={user.id} className="hover:bg-gray-50">
                 {activeTab !== "users" && (
                   <td className="p-2 border">
                     {/* ✅ Avatar Preview Dialog */}
