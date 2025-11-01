@@ -128,9 +128,9 @@ const Page = () => {
             )}
           </Button>
 
-          <p className="text-sm text-amber-800 hover:text-amber-900 cursor-pointer text-center mt-1">
+          {/* <p className="text-sm text-amber-800 hover:text-amber-900 cursor-pointer text-center mt-1">
             Forgot password?
-          </p>
+          </p> */}
           <p
             onClick={() => router.push("/register")}
             className="text-sm text-amber-800 hover:text-amber-900 cursor-pointer text-center mt-1"

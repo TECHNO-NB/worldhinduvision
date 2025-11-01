@@ -1,59 +1,56 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import { Camera, Globe, Heart, Users, Leaf, Book } from "lucide-react";
+import { Camera, Globe, Heart, Users, Leaf } from "lucide-react";
+import Slider from "react-slick";
 
-const galleryItems = [
-  {
-    category: "Global Conferences & Summits",
-    icon: <Globe className="w-8 h-8 text-amber-700" />,
-    images: [
-      "/gallery/conference1.jpg",
-      "/gallery/conference2.jpg",
-      "/gallery/conference3.jpg",
-    ],
-  },
-  {
-    category: "Humanitarian Service Missions",
-    icon: <Heart className="w-8 h-8 text-amber-700" />,
-    images: [
-      "/gallery/service1.jpg",
-      "/gallery/service2.jpg",
-      "/gallery/service3.jpg",
-    ],
-  },
-  {
-    category: "Youth & Women Empowerment",
-    icon: <Users className="w-8 h-8 text-amber-700" />,
-    images: [
-      "/gallery/empower1.jpg",
-      "/gallery/empower2.jpg",
-      "/gallery/empower3.jpg",
-    ],
-  },
-  {
-    category: "Cultural & Temple Celebrations",
-    icon: <Camera className="w-8 h-8 text-amber-700" />,
-    images: [
-      "/gallery/culture1.jpg",
-      "/gallery/culture2.jpg",
-      "/gallery/culture3.jpg",
-    ],
-  },
-  {
-    category: "Environmental & Educational Projects",
-    icon: <Leaf className="w-8 h-8 text-amber-700" />,
-    images: [
-      "/gallery/eco1.jpg",
-      "/gallery/eco2.jpg",
-      "/gallery/eco3.jpg",
-    ],
-  },
-];
+// Import slick styles
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const iconMap:any = {
+  globalconferencesandsummits: <Globe className="w-8 h-8 text-amber-700" />,
+  humanitarianservicemissions: <Heart className="w-8 h-8 text-amber-700" />,
+  youthandwomanempowerment: <Users className="w-8 h-8 text-amber-700" />,
+  culturalandtemplecelebrations: <Camera className="w-8 h-8 text-amber-700" />,
+  environmentalandeducationprojects: <Leaf className="w-8 h-8 text-amber-700" />,
+};
+
+type GalleryData = {
+  type: string;
+  data: { imageUrl: string; id: string; title?: string }[];
+};
 
 export default function GalleryPage() {
+  const [galleryData, setGalleryData] = useState<GalleryData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/getall-galleryhighlights`);
+        setGalleryData(res.data.data); // Assuming APIResponse.data = results
+        console.log("+++++++gallerydata",res.data.data)
+      } catch (err) {
+        console.error("Error fetching gallery data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGallery();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen text-amber-700 text-xl">
+        Loading gallery...
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-yellow-50 via-orange-50 to-amber-100 text-amber-900">
       {/* Header */}
@@ -66,38 +63,70 @@ export default function GalleryPage() {
 
       {/* Gallery Sections */}
       <main className="max-w-6xl mx-auto px-6 py-16 space-y-20">
-        {galleryItems.map((section) => (
-          <div key={section.category} className="space-y-6">
+        {galleryData.map((section:any) => (
+          <div key={section.type} className="space-y-6">
             <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-amber-100 rounded-full">{section.icon}</div>
-              <h2 className="text-2xl font-semibold text-amber-800">
-                {section.category}
+              <div className="p-3 bg-amber-100 rounded-full">{iconMap[section.type]}</div>
+              <h2 className="text-2xl font-semibold capitalize text-amber-800">
+                {section.type.replace(/([a-z])([A-Z])/g, "$1 $2")}
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {section.images.map((img, i) => (
-                <Card
-                  key={i}
-                  className="border-none bg-white/70 hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden"
-                >
-                  <CardContent className="p-0">
-                    <Image
-                      src={img}
-                      alt={`${section.category} ${i + 1}`}
-                      width={400}
-                      height={300}
-                      className="object-cover w-full h-60 hover:scale-105 transition-transform duration-300"
-                    />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            {section.data.length > 3 ? (
+              // ✅ Slider for > 3 images
+              <Slider
+                dots={true}
+                infinite={true}
+                slidesToShow={3}
+                slidesToScroll={1}
+                autoplay={true}
+                autoplaySpeed={3000}
+                responsive={[
+                  { breakpoint: 1024, settings: { slidesToShow: 2 } },
+                  { breakpoint: 640, settings: { slidesToShow: 1 } },
+                ]}
+              >
+                { section.data.map((item:any, i:number) => (
+                  
+                  <div key={i} className="px-2">
+                    <Card className="border-none bg-white/70 hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden">
+                      <CardContent className="p-0">
+                        <Image
+                          src={item?.image}
+                          alt={item.title || `${section.type} ${i + 1}`}
+                          width={400}
+                          height={300}
+                          className="object-cover w-full h-60 hover:scale-105 transition-transform duration-300"
+                        />
+                      </CardContent>
+                    </Card>
+                  </div>
+                ))}
+              </Slider>
+            ) : (
+              // ✅ Static grid for ≤ 3 images
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {section.data.map((item:any, i:number) => (
+                  <Card
+                    key={i}
+                    className="border-none bg-white/70 hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden"
+                  >
+                    <CardContent className="p-0">
+                      <Image
+                        src={item.image}
+                        alt={item.title || `${section.type} ${i + 1}`}
+                        width={400}
+                        height={300}
+                        className="object-cover w-full h-60 hover:scale-105 transition-transform duration-300"
+                      />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </main>
-
-    
     </div>
   );
 }

@@ -40,7 +40,7 @@ export default function VerifyUser() {
           if (data.data.role === "admin") {
             // router.push("/admin/users");
           } else {
-            router.push("/");
+            // router.push("/");
           }
         }
       } catch (err) {

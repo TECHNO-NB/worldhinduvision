@@ -132,7 +132,7 @@ export default function HinduNGOsPage() {
 
       {/* Footer */}
       <footer className="text-center py-8 border-t border-amber-200 text-gray-700 bg-gradient-to-b from-amber-50 to-yellow-100">
-        <p>© 2025 World Hindu Vision. All Rights Reserved.</p>
+        <p>© 2009 World Hindu Vision. All Rights Reserved.</p>
       </footer>
     </div>
   );

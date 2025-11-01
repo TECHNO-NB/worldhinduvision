@@ -95,36 +95,11 @@ export default function DonatePage() {
         </div>
       </section>
 
-      {/* Custom Donation */}
-      <section className="bg-white/70 py-16 backdrop-blur-md text-center">
-        <h2 className="text-3xl font-bold text-amber-800 mb-6">
-          Custom Donation
-        </h2>
-        <p className="text-gray-700 mb-6">
-          You can also contribute any amount from your heart 💖
-        </p>
-
-        <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-          <input
-            type="number"
-            placeholder="Enter Amount ($)"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            className="border border-amber-300 px-4 py-3 rounded-lg w-64 text-center text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-          />
-          <Button
-            disabled={!amount || Number(amount) <= 0}
-            onClick={() => handleDonate(Number(amount))}
-            className="bg-amber-700 hover:bg-amber-800 text-white rounded-lg px-6"
-          >
-            Donate
-          </Button>
-        </div>
-      </section>
-
+      
+     
       {/* Footer */}
       <footer className="text-center py-8 border-t border-amber-200 text-gray-700">
-        <p>© 2025 World Hindu Vision. All Rights Reserved.</p>
+        <p>© 2009 World Hindu Vision. All Rights Reserved.</p>
       </footer>
     </div>
   );
