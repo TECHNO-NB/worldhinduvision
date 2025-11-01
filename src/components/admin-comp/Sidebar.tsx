@@ -7,7 +7,7 @@ import {
   Calendar,
   ImageIcon,
   HousePlus,
-  Bell,
+
   UserStar,SquarePlay  
 } from "lucide-react";
 
@@ -21,6 +21,7 @@ const Sidebar = () => {
     { name: "Temples", href: "/admin/temple", icon: HousePlus },
     { name: "Membership", href: "/admin/membership", icon: UserStar  },
     { name: "Vlog", href: "/admin/vlog", icon: SquarePlay   },
+     { name: "Ngos", href: "/admin/ngos", icon: Users   },
   ];
 
   return (
@@ -55,10 +56,10 @@ const Sidebar = () => {
               {/* Notification section */}
               {item.notification && item.notification > 0 && (
                 <div className="relative flex items-center">
-                  <Bell size={16} className="text-yellow-400" />
+                  {/* <Bell size={16} className="text-yellow-400" />
                   <span className="absolute -top-2 -right-2 bg-red-600 text-[10px] font-semibold px-1.5 py-0.5 rounded-full">
                     {item.notification}
-                  </span>
+                  </span> */}
                 </div>
               )}
             </Link>

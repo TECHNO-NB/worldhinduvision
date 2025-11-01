@@ -1,51 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import logo from "../../../public/logo2.jpg";
 import banner from "../../../public/logo3.jpg";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+interface Ngo {
+  id: number;
+  name: string;
+  location: string;
+  image: string;
+  description: string;
+}
 
 export default function HinduNGOsPage() {
-  const ngos = [
-    {
-      id: 1,
-      name: "Akhil Bharatiya Seva Sangh",
-      location: "Varanasi, India",
-      image:
-        "https://tse3.mm.bing.net/th/id/OIP.-mVjL8v4v6O5Yr7Uy4UjvAHaE7?w=700&h=467&rs=1&pid=ImgDetMain",
-      description:
-        "Dedicated to rural development, cow protection, and education of underprivileged children based on Sanatan Dharma values.",
-    },
-    {
-      id: 2,
-      name: "ISKCON Foundation",
-      location: "Worldwide",
-      image:
-        "https://tse3.mm.bing.net/th/id/OIP.8vnKYo3Zy7URXETxKn8utAHaE8?w=700&h=467&rs=1&pid=ImgDetMain",
-      description:
-        "Serving humanity with spiritual food programs, temples, and teachings of the Bhagavad Gita across the globe.",
-    },
-    {
-      id: 3,
-      name: "Chinmaya Mission",
-      location: "Mumbai, India",
-      image:
-        "https://tse2.mm.bing.net/th/id/OIP.PPfcbGx1UoPZ5kaJZgMmbAHaE8?w=700&h=467&rs=1&pid=ImgDetMain",
-      description:
-        "Promotes spiritual upliftment through education, social service, and Vedantic knowledge to nurture global peace.",
-    },
-    {
-      id: 4,
-      name: "Ramakrishna Mission",
-      location: "Kolkata, India",
-      image:
-        "https://tse3.mm.bing.net/th/id/OIP.LmW8q2bfVQ9Bo-1Gv8sL1wHaE8?w=700&h=467&rs=1&pid=ImgDetMain",
-      description:
-        "Serving the nation through schools, hospitals, and relief work inspired by the ideals of Swami Vivekananda.",
-    },
-  ];
+  const [ngos, setNgos] = useState<Ngo[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const router = useRouter();
+
+  // Fetch NGOs from backend API
+  const fetchNgos = async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/get-all-ngos`
+      );
+      setNgos(res.data.data || []);
+    } catch (error) {
+      console.error("Error fetching NGOs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchNgos();
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-yellow-100 text-amber-900">
@@ -57,7 +52,7 @@ export default function HinduNGOsPage() {
           fill
           className="object-cover brightness-90"
         />
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 text-center text-white">
           <Image
             src={logo}
@@ -85,34 +80,45 @@ export default function HinduNGOsPage() {
           as the highest form of duty.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {ngos.map((ngo) => (
-            <Card
-              key={ngo.id}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:scale-[1.03] transition-all duration-300 border border-amber-200"
-            >
-              <Image
-                src={ngo.image}
-                alt={ngo.name}
-                width={400}
-                height={300}
-                className="object-cover w-full h-48"
-              />
-              <CardContent className="p-5 text-left">
-                <h3 className="text-xl font-bold text-amber-800 mb-1">
-                  {ngo.name}
-                </h3>
-                <p className="text-sm text-gray-600 mb-2">📍 {ngo.location}</p>
-                <p className="text-gray-700 text-sm line-clamp-3 mb-4">
-                  {ngo.description}
-                </p>
-                <Button className="bg-amber-700 hover:bg-amber-800 text-white rounded-full px-4 py-2 text-sm transition">
-                  Learn More
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex items-center justify-center py-10 text-gray-700">
+            <Loader2 className="w-6 h-6 mr-2 animate-spin" /> Loading NGOs...
+          </div>
+        ) : ngos.length === 0 ? (
+          <p className="text-gray-600">No NGOs found.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {ngos.map((ngo) => (
+              <Card
+                key={ngo.id}
+                className="bg-white rounded-2xl shadow-xl overflow-hidden hover:scale-[1.03] transition-all duration-300 border border-amber-200"
+              >
+                <div className="relative w-full h-48">
+                  <Image
+                    src={ngo.image}
+                    alt={ngo.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <CardContent className="p-5 text-left">
+                  <h3 className="text-xl font-bold text-amber-800 mb-1">
+                    {ngo.name}
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-2">
+                    📍 {ngo.location}
+                  </p>
+                  <p className="text-gray-700 text-sm line-clamp-3 mb-4">
+                    {ngo.description}
+                  </p>
+                  <Button className="bg-amber-700 hover:bg-amber-800 text-white rounded-full px-4 py-2 text-sm transition">
+                    Learn More
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* Call to Action */}
@@ -125,7 +131,10 @@ export default function HinduNGOsPage() {
           the globe. Every small act of kindness contributes to a larger
           transformation.
         </p>
-        <Button className="bg-amber-700 hover:bg-amber-800 text-white px-8 py-3 rounded-lg shadow-lg transition">
+        <Button
+          onClick={() => router.push("/volunteer-register")}
+          className="bg-amber-700 hover:bg-amber-800 text-white px-8 py-3 rounded-lg shadow-lg transition"
+        >
           Become a Volunteer
         </Button>
       </section>
