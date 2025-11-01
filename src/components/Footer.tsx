@@ -29,7 +29,7 @@ const Footer = () => {
 
         {/* Legal Info */}
         <div className="text-center md:text-right text-sm text-gray-600">
-          <p>© 2025 World Hindu Vision. All rights reserved.</p>
+          <p>© 2009 World Hindu Vision. All rights reserved.</p>
           <div className="flex items-center justify-center md:justify-end gap-3 mt-1">
             <Link
               href="/privacy-policy"

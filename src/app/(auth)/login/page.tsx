@@ -7,9 +7,13 @@ import logo from "../../../../public/logo2.jpg";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { addUser } from "@/redux/userSlice";
 
 const Page = () => {
   const router = useRouter();
+
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,9 +32,24 @@ const Page = () => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/login`,
         formData
       );
-      toast.success("Login Successful!");
+      const userData = {
+        id: response.data.data.id,
+        fullName: response.data.data.fullName,
+        avatar: response.data.data.avatar ?? "",
+        phoneNumber: response.data.data.phoneNumber,
+        email: response.data.data.email,
+        address: response.data.data.address,
+        role: response.data.data.role,
+        forVolunteer: response.data.data.forVolunteer,
+      };
 
-      router.push("/");
+      dispatch(addUser(userData));
+      if (response.data.data.role === "admin") {
+        router.push("/admin/users");
+      } else {
+        router.push("/");
+      }
+      toast.success("Login Successful!");
     } catch (error: any) {
       toast.error(error.response?.data?.message || "Login Failed!");
     } finally {

@@ -2,9 +2,12 @@
 /* eslint-disable */
 
 import { usePathname } from "next/navigation";
+import { Provider } from "react-redux";
 
 import { useEffect } from "react";
 import MainNav from "./MainNav";
+import { store } from "@/redux/store";
+import VerifyUser from "./UserVerify";
 
 export default function LayoutShell({
   children,
@@ -18,8 +21,11 @@ export default function LayoutShell({
 
   return (
     <>
-      {!hideLayout  && <MainNav />}
-      {children}
+      <Provider store={store}>
+        <VerifyUser />
+        {!hideLayout && <MainNav />}
+        {children}
+      </Provider>
     </>
   );
 }
