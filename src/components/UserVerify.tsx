@@ -40,12 +40,12 @@ export default function VerifyUser() {
           if (data.data.role === "admin") {
             // router.push("/admin/users");
           } else {
-            // router.push("/");
+             router.push("/");
           }
         }
       } catch (err) {
         console.error("❌ User verification failed:", err);
-        // router.push("/login");
+        router.push("/login");
       } finally {
         setIsLoading(false);
       }

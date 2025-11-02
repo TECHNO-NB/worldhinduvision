@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Globe2 } from "lucide-react";
 import logo from "../../../public/logo2.jpg";
 import banner from "../../../public/logo3.jpg";
 
@@ -32,6 +32,27 @@ export default function ContactPage() {
     setSubmitted(true);
     setFormData({ name: "", email: "", message: "" });
   };
+
+  // 🌍 List of countries & cities
+  const locations = [
+    // USA
+    "New York", "San Francisco", "California", "Chicago", "Illinois",
+    "Houston", "Texas", "Atlanta", "Georgia", "Edison", "New Jersey",
+    "Boston", "Massachusetts", "Seattle",
+    // Australia
+    "Australia", "Melbourne", "Sydney", "Perth",
+    // Europe
+    "Germany", "Holland", "UK", "Wales", "France", "Poland",
+    "Switzerland", "Belgium", "Austria", "Italy", "Norway", "Finland", "Scotland",
+    // Africa
+    "Kenya", "Uganda", "Ghana", "South Africa",
+    // Middle East
+    "Saudi Arabia", "Dubai",
+    // Asia
+    "India", "Nepal", "Sri Lanka", "Malaysia", "Singapore", "Malé",
+    // South America
+    "Peru",
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 via-orange-50 to-yellow-100 text-amber-900">
@@ -77,7 +98,7 @@ export default function ContactPage() {
           {
             icon: <MapPin className="w-8 h-8 text-amber-800" />,
             title: "Visit Us",
-            info: "Srirangam, Tamil Nadu, India",
+            info: "11809 Sutter Ave, South Ozone Park, NY 11420, United States",
           },
         ].map((item) => (
           <Card
@@ -93,6 +114,33 @@ export default function ContactPage() {
             </CardContent>
           </Card>
         ))}
+      </section>
+
+      {/* 🌍 Global Presence */}
+      <section className="py-16 bg-gradient-to-br from-yellow-50 to-amber-100 border-t border-amber-200">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="flex justify-center mb-4">
+            <Globe2 className="w-10 h-10 text-amber-800" />
+          </div>
+          <h2 className="text-3xl font-bold text-amber-800 mb-6">
+            Our Global Presence
+          </h2>
+          <p className="text-gray-700 mb-10">
+            World Hindu Vision has its presence and community support across
+            the globe. Below are some of our active regions 🌏
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-sm text-amber-900 font-medium">
+            {locations.map((place) => (
+              <div
+                key={place}
+                className="bg-white/70 border border-amber-200 rounded-xl py-3 shadow-sm hover:shadow-md hover:bg-amber-50 transition-all duration-300"
+              >
+                {place}
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Contact Form */}

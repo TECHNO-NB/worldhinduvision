@@ -27,7 +27,7 @@ const ContactSection = () => {
               </p>
               <p className="flex items-center justify-center md:justify-start gap-2 text-gray-600 text-sm mt-1">
                 <MapPin className="w-4 h-4 text-orange-600" /> 
-                Pashupatinath Marg, New Delhi, India
+                11809 Sutter Ave, South Ozone Park, NY 11420, United States
               </p>
             </div>
 

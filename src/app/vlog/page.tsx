@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CalendarDays, Play } from "lucide-react";
 import logo from "../../../public/logo2.jpg"
+import { useRouter } from "next/navigation";
 
 interface Vlog {
   id: string;
@@ -22,6 +23,8 @@ interface Vlog {
 export default function WorldHinduVlogPage() {
   const [vlogs, setVlogs] = useState<Vlog[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const router=useRouter();
 
   useEffect(() => {
     const fetchVlogs = async () => {
@@ -114,6 +117,7 @@ export default function WorldHinduVlogPage() {
                 )}
                 <div className="absolute inset-0 bg-black/30 opacity-0 hover:opacity-100 transition flex items-center justify-center">
                   <Button
+                  onClick={()=>router.push(`/vlog-details/${vlog.id}`)}
                     size="icon"
                     className="rounded-full bg-white/90 hover:bg-orange-600 hover:text-white"
                   >
@@ -141,7 +145,7 @@ export default function WorldHinduVlogPage() {
                     </div>
                   </div>
                 </div>
-                <Button variant="ghost" className="text-orange-600 hover:text-orange-700">
+                <Button onClick={()=>router.push(`/vlog-details/${vlog.id}`)} variant="ghost" className="text-orange-600 hover:text-orange-700">
                   Watch
                 </Button>
               </CardFooter>

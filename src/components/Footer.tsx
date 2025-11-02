@@ -14,11 +14,11 @@ const Footer = () => {
             About
           </Link>
           <Separator orientation="vertical" className="h-4 hidden md:block" />
-          <Link href="/programs" className="hover:text-orange-600 transition">
+          <Link href="/vlog" className="hover:text-orange-600 transition">
             Programs
           </Link>
           <Separator orientation="vertical" className="h-4 hidden md:block" />
-          <Link href="/events" className="hover:text-orange-600 transition">
+          <Link href="#gallery" className="hover:text-orange-600 transition">
             Events
           </Link>
           <Separator orientation="vertical" className="h-4 hidden md:block" />

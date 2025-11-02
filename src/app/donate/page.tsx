@@ -3,11 +3,21 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import Image from "next/image";
-import templeImage from "../../../public/logo3.jpg"; // 🛕 Replace with your own image
+import templeImage from "../../../public/logo3.jpg";
+import qrCode from "../../../public/qrpic.jpg"; // 🔹 Add your QR image inside /public folder
 
 export default function DonatePage() {
-  const [amount, setAmount] = useState<number | string>("");
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [open, setOpen] = useState(false);
 
   const donationTiers = [
     {
@@ -26,19 +36,27 @@ export default function DonatePage() {
       desc: "Support global Sanatan Dharma awareness missions.",
     },
     {
-      title: "Guardian",
+      title: "Protector",
       amount: 500,
-      desc: "Support global Sanatan Dharma awareness missions.",
+      desc: "Strengthen worldwide dharmic initiatives.",
     },
     {
-      title: "Guardian",
+      title: "Patron",
       amount: 1000,
-      desc: "Support global Sanatan Dharma awareness missions.",
+      desc: "Empower long-term cultural and spiritual projects.",
     },
   ];
 
   const handleDonate = (value: number) => {
-    alert(`🙏 Thank you for donating $${value}!`);
+    setSelectedAmount(value);
+    setOpen(true);
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/qr-sample.png"; // 🔹 Replace with your actual QR image path
+    link.download = "WorldHinduVision-Donation-QR.png";
+    link.click();
   };
 
   return (
@@ -72,7 +90,7 @@ export default function DonatePage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
           {donationTiers.map((tier) => (
             <Card
-              key={tier.title}
+              key={tier.title + tier.amount}
               className="border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 shadow-lg hover:scale-105 transition-transform duration-300"
             >
               <CardContent className="p-6 text-center">
@@ -95,8 +113,52 @@ export default function DonatePage() {
         </div>
       </section>
 
-      
-     
+      {/* Donation Modal */}
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-md bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200 rounded-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-amber-800 text-center">
+              🙏 Thank You for Your Donation!
+            </DialogTitle>
+            <DialogDescription className="text-center text-gray-700 mt-2">
+              Scan the QR code below to complete your donation of{" "}
+              <span className="font-semibold text-amber-800">
+                ${selectedAmount}
+              </span>
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="flex flex-col items-center py-6">
+            <Image
+              src={qrCode}
+              alt="Donation QR"
+              width={200}
+              height={200}
+              className="rounded-lg border border-amber-300 shadow-md"
+            />
+            <p className="mt-3 text-sm text-gray-600 text-center">
+              Use any UPI / payment app to scan and pay.
+            </p>
+          </div>
+
+          <DialogFooter className="flex justify-center gap-3">
+            <Button
+              onClick={handleDownload}
+              className="bg-amber-700 hover:bg-amber-800 text-white"
+            >
+              Download QR
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => setOpen(false)}
+              className="border-amber-400 text-amber-800"
+            >
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Footer */}
       <footer className="text-center py-8 border-t border-amber-200 text-gray-700">
         <p>© 2009 World Hindu Vision. All Rights Reserved.</p>
