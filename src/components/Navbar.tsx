@@ -83,9 +83,9 @@ const Navbar = () => {
         </ul>
 
         {/* Footer Decorative Section */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 py-5 bg-white/10 border-t border-white/20 text-center text-sm">
+        {/* <div className="absolute bottom-0 left-0 right-0 px-6 py-5 bg-white/10 border-t border-white/20 text-center text-sm">
           <p className="text-white/80">© 2009 Hindu Heritage Foundation</p>
-        </div>
+        </div> */}
       </div>
 
       {/* Overlay */}
