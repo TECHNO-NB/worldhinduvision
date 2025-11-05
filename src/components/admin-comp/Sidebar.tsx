@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Users,
   Calendar,
   ImageIcon,
   HousePlus,
 
-  UserStar,SquarePlay  
+  UserStar,SquarePlay,  
+  HomeIcon
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -24,10 +25,11 @@ const Sidebar = () => {
      { name: "Ngos", href: "/admin/ngos", icon: Users   },
   ];
 
+  const router=useRouter();
   return (
-    <div className="w-64 min-h-screen bg-gray-900 text-white flex flex-col">
-      <div className="p-4 text-2xl font-bold border-b border-gray-700">
-        WHV Admin
+    <div className="w-64 fixed top-0 min-h-screen bg-gray-900 text-white flex flex-col">
+      <div className="p-4 text-2xl flex justify-between  font-bold border-b border-gray-700">
+        WHV Admin <span className="cursor-pointer " onClick={()=>router.push("/")}><HomeIcon /></span>
       </div>
 
       <nav className="flex-1 p-4 space-y-2">

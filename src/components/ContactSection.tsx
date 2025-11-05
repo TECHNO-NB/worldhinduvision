@@ -23,7 +23,7 @@ const ContactSection = () => {
                 <Mail className="w-4 h-4 text-orange-600" /> info@worldhinduvision.org
               </p>
               <p className="flex items-center justify-center md:justify-start gap-2 text-gray-600 text-sm mt-1">
-                <Phone className="w-4 h-4 text-orange-600" /> +1 (450) 418-1143
+                <Phone className="w-4 h-4 text-orange-600" /> +1 8255922236
               </p>
               <p className="flex items-center justify-center md:justify-start gap-2 text-gray-600 text-sm mt-1">
                 <MapPin className="w-4 h-4 text-orange-600" /> 

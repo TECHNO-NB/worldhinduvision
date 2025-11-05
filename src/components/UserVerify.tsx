@@ -2,7 +2,7 @@
 /* eslint-disable */
 import { addUser } from "@/redux/userSlice";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -11,7 +11,7 @@ export default function VerifyUser() {
   const userData = useSelector((state: any) => state.user);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
-
+  const pathname=usePathname()
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -38,21 +38,21 @@ export default function VerifyUser() {
 
           
           if (data.data.role === "admin") {
-            // router.push("/admin/users");
+           router.push("/admin/users");
           } else {
              router.push("/");
           }
         }
       } catch (err) {
         console.error("❌ User verification failed:", err);
-        router.push("/login");
+        router.push("/");
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchUser();
-  }, [dispatch, router]);
+  }, [dispatch, router,pathname]);
 
   if (isLoading) {
     return (

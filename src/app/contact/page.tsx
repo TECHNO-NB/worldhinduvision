@@ -93,7 +93,7 @@ export default function ContactPage() {
           {
             icon: <Phone className="w-8 h-8 text-amber-800" />,
             title: "Call Us",
-            info: "+1 (450) 418-1143",
+            info: "+1 8255922236",
           },
           {
             icon: <MapPin className="w-8 h-8 text-amber-800" />,
