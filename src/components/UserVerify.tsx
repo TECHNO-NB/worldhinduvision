@@ -8,61 +8,68 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function VerifyUser() {
   const dispatch = useDispatch();
-  const userData = useSelector((state: any) => state.user);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
-  const pathname=usePathname()
+  const pathname = usePathname();
+  const userData = useSelector((state: any) => state.user);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
         axios.defaults.withCredentials = true;
 
-        // ✅ Fetch only if not already in Redux
-        if (!userData?.id) {
-          const { data } = await axios.get(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/verify-user`
-          );
+        // ✅ Verify login
+        const { data } = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/verify-user`
+        );
 
-          const fetchedUser = {
-            id: data.data.id,
-            fullName: data.data.fullName,
-            avatar: data.data.avatar ?? "",
-            phoneNumber: data.data.phoneNumber,
-            email: data.data.email,
-            address: data.data.address,
-            role: data.data.role,
-            forVolunteer: data.data.forVolunteer,
-          };
+        const fetchedUser = {
+          id: data.data.id,
+          fullName: data.data.fullName,
+          avatar: data.data.avatar ?? "",
+          phoneNumber: data.data.phoneNumber,
+          email: data.data.email,
+          address: data.data.address,
+          role: data.data.role,
+          forVolunteer: data.data.forVolunteer,
+        };
 
-          dispatch(addUser(fetchedUser));
+        dispatch(addUser(fetchedUser));
 
-          
-          if (data.data.role === "admin") {
-           router.push("/admin/users");
-          } else if(data.data.role==="user") {
-             router.push("/");
-          }else{
-            router.push("/")
-          }
+        // ✅ Redirect based on role
+        if (fetchedUser.role === "admin" && !pathname.startsWith("/admin")) {
+          router.push("/admin/users");
         }
       } catch (err) {
         console.error("❌ User verification failed:", err);
-        router.push("/");
+
+        const publicRoutes = [
+          "/",
+          "/login",
+          "/register",
+          "/volunteer-register",
+          "/about",
+          "/contact",
+          "/details",
+          "/donate",
+          "/hindunogs",
+          "/membership",
+          "/temples",
+          "/vision",
+          "/vlog",
+          "/vlog-details",
+        ];
+        if (!publicRoutes.includes(pathname)) {
+          router.push("/");
+        }
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchUser();
-  }, [dispatch, router,pathname]);
+  }, [pathname, dispatch]);
 
-  if (isLoading) {
-    return (
-      <>
-      </>
-    );
-  }
-
- 
+  if (isLoading) return null;
   return null;
 }
