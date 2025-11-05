@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Mail, Phone, MapPin, Globe2 } from "lucide-react";
+import { Mail, Phone, MapPin, Globe2, MessageCircle } from "lucide-react";
 import logo from "../../../public/logo2.jpg";
 import banner from "../../../public/logo3.jpg";
+import Link from "next/link";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -116,6 +117,21 @@ export default function ContactPage() {
         ))}
       </section>
 
+      
+     <section className="w-full flex justify-center mb-4">
+        <div className="mt-4 flex justify-center md:justify-start ">
+                <Link
+                  href="https://wa.me/+254117691892"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button className="bg-green-500 hover:bg-green-600 cursor-pointer text-white font-semibold px-5 py-2 rounded-full shadow-md transition-all">
+                    <MessageCircle />  Chat on WhatsApp
+                  </Button>
+                </Link>
+              </div>
+     </section>
+
       {/* 🌍 Global Presence */}
       <section className="py-16 bg-gradient-to-br from-yellow-50 to-amber-100 border-t border-amber-200">
         <div className="max-w-5xl mx-auto text-center">
@@ -143,7 +159,9 @@ export default function ContactPage() {
         </div>
       </section>
 
+
       {/* Contact Form */}
+
       <section className="bg-white/80 py-16 backdrop-blur-md">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-amber-800 mb-6">

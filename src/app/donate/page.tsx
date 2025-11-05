@@ -14,6 +14,8 @@ import {
 import Image from "next/image";
 import templeImage from "../../../public/logo3.jpg";
 import qrCode from "../../../public/qrpic.jpg"; // 🔹 Add your QR image inside /public folder
+import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 
 export default function DonatePage() {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
@@ -158,7 +160,20 @@ export default function DonatePage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
+      {/* whatsapp */}
+      <div className="flex w-full justify-center mb-4">
+        <div className="mt-4 flex justify-center md:justify-start ">
+          <Link
+            href="https://wa.me/+254117691892"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button className="bg-green-500 hover:bg-green-600 cursor-pointer text-white font-semibold px-5 py-2 rounded-full shadow-md transition-all">
+              <MessageCircle /> Chat on WhatsApp
+            </Button>
+          </Link>
+        </div>
+      </div>
       {/* Footer */}
       <footer className="text-center py-8 border-t border-amber-200 text-gray-700">
         <p>© 2009 World Hindu Vision. All Rights Reserved.</p>

@@ -12,6 +12,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 
 export default function MembershipPage() {
   const [fullName, setFullName] = useState("");
@@ -28,9 +30,8 @@ export default function MembershipPage() {
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
-
-  const userData =useSelector((state:any)=> state.user);
-  const router=useRouter();
+  const userData = useSelector((state: any) => state.user);
+  const router = useRouter();
   const tierPrices: Record<string, string> = {
     silver: "$50",
     gold: "$100",
@@ -52,9 +53,8 @@ export default function MembershipPage() {
   }
 
   async function handleSubmit(e: FormEvent) {
-
-    if(!userData || !userData.id){
-      router.push("/login")
+    if (!userData || !userData.id) {
+      router.push("/login");
       toast.error("User must be login.");
       return;
     }
@@ -93,7 +93,7 @@ export default function MembershipPage() {
           tierPrices[membershipTier]
         })`
       );
-      toast.success("success")
+      toast.success("success");
       setFullName("");
       setFatherName("");
       setOccupation("");
@@ -284,6 +284,19 @@ export default function MembershipPage() {
             </form>
           </CardContent>
         </Card>
+      </div>
+      <div className="w-full flex justify-center mb-4">
+        <div className="mt-4 flex justify-center md:justify-start ">
+          <Link
+            href="https://wa.me/+254117691892"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button className="bg-green-500 hover:bg-green-600 cursor-pointer text-white font-semibold px-5 py-2 rounded-full shadow-md transition-all">
+              <MessageCircle /> Chat on WhatsApp
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
