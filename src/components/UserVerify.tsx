@@ -42,12 +42,12 @@ export default function VerifyUser() {
           } else if(data.data.role==="user") {
              router.push("/");
           }else{
-            router.push("/login")
+            router.push("/")
           }
         }
       } catch (err) {
         console.error("❌ User verification failed:", err);
-        router.push("/login");
+        router.push("/");
       } finally {
         setIsLoading(false);
       }
