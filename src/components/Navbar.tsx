@@ -45,7 +45,7 @@ const Navbar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 right-0 h-full w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/3 
+        className={`fixed top-0 right-0 h-full w-3/4 sm:w-2/3 md:w-1/2 lg:w-1/3 overflow-y-scroll 
         bg-gradient-to-br from-indigo-900 via-purple-800 to-pink-600 
         text-white backdrop-blur-lg shadow-2xl 
         transform transition-transform duration-500 ease-in-out z-50
@@ -82,10 +82,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Footer Decorative Section */}
-        {/* <div className="absolute bottom-0 left-0 right-0 px-6 py-5 bg-white/10 border-t border-white/20 text-center text-sm">
-          <p className="text-white/80">© 2009 Hindu Heritage Foundation</p>
-        </div> */}
+     
       </div>
 
       {/* Overlay */}
