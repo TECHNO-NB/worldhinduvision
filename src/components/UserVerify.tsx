@@ -39,13 +39,15 @@ export default function VerifyUser() {
           
           if (data.data.role === "admin") {
            router.push("/admin/users");
-          } else {
+          } else if(data.data.role==="user") {
              router.push("/");
+          }else{
+            router.push("/login")
           }
         }
       } catch (err) {
         console.error("❌ User verification failed:", err);
-        router.push("/");
+        router.push("/login");
       } finally {
         setIsLoading(false);
       }
