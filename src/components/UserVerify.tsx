@@ -36,30 +36,38 @@ export default function VerifyUser() {
 
         dispatch(addUser(fetchedUser));
 
-        // ✅ Redirect based on role
+        // ✅ Redirect admin
         if (fetchedUser.role === "admin" && !pathname.startsWith("/admin")) {
           router.push("/admin/users");
         }
       } catch (err) {
         console.error("❌ User verification failed:", err);
 
-        const publicRoutes = [
-          "/",
-          "/login",
-          "/register",
-          "/volunteer-register",
-          "/about",
-          "/contact",
-          "/details",
-          "/donate",
-          "/hindunogs",
-          "/membership",
-          "/temples",
-          "/vision",
-          "/vlog",
-          "/vlog-details",
+        // ✅ Define public routes (regex-supported)
+        const publicRoutePatterns = [
+          /^\/$/, // Home
+          /^\/login$/,
+          /^\/register$/,
+          /^\/volunteer-register$/,
+          /^\/about$/,
+          /^\/contact$/,
+          /^\/details\/[^/]+$/, // Dynamic details/[id]
+          /^\/donate$/,
+          /^\/hindunogs$/,
+          /^\/membership$/,
+          /^\/temples$/,
+          /^\/vision$/,
+          /^\/vlog$/,
+          /^\/vlog-details$/,
         ];
-        if (!publicRoutes.includes(pathname)) {
+
+        // ✅ Check if current route is public
+        const isPublic = publicRoutePatterns.some((regex) =>
+          regex.test(pathname)
+        );
+
+        // ✅ Redirect if not public
+        if (!isPublic) {
           router.push("/");
         }
       } finally {
