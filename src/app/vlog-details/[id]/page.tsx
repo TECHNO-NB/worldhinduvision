@@ -25,6 +25,7 @@ export default function VlogDetailsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+     window.scrollTo({ top: 0, behavior: "smooth" });
     const fetchVlogDetails = async () => {
       try {
         const res = await fetch(
