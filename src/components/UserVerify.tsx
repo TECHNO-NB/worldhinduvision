@@ -58,7 +58,7 @@ export default function VerifyUser() {
           /^\/temples$/,
           /^\/vision$/,
           /^\/vlog$/,
-          /^\/vlog-details$/,
+          /^\/vlog-details\/[^/]+$/,
         ];
 
         // ✅ Check if current route is public
