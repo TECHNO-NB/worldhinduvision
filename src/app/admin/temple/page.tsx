@@ -148,7 +148,6 @@ export default function TempleAdmin() {
   const handleUpdateTemple = async () => {
     if (!editId) return;
 
-  
     try {
       setEditLoading(true);
       const formData = new FormData();
@@ -201,7 +200,7 @@ export default function TempleAdmin() {
   };
 
   return (
-    <div>
+    <div className=" h-full overflow-y-scroll">
       <h1 className="text-3xl font-bold mb-6">Temple Management</h1>
 
       {/* Add Button */}
@@ -212,7 +211,8 @@ export default function TempleAdmin() {
           </Button>
         </DialogTrigger>
 
-        <DialogContent className="sm:max-w-lg">
+        {/* Make modal scrollable */}
+        <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Add New Temple</DialogTitle>
           </DialogHeader>
@@ -244,6 +244,7 @@ export default function TempleAdmin() {
               accept="image/*"
               onChange={handleAddFileChange}
             />
+
             {addImagePreview ? (
               <img
                 src={addImagePreview}
