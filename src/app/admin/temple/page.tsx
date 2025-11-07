@@ -60,7 +60,7 @@ export default function TempleAdmin() {
   const fetchAllTemples = async () => {
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/admin/get-all-temple`
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/users/get-all-temple`
       );
       if (res.data.status === 200) {
         setTemples(res.data.data);
