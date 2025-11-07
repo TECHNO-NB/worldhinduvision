@@ -302,7 +302,7 @@ export default function TempleAdmin() {
                     </Button>
                   </DialogTrigger>
 
-                  <DialogContent className="sm:max-w-lg">
+                  <DialogContent className="sm:max-w-lg max-h-[80vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Edit Temple</DialogTitle>
                     </DialogHeader>
