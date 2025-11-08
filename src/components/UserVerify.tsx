@@ -51,9 +51,9 @@ export default function VerifyUser() {
           /^\/volunteer-register$/,
           /^\/about$/,
           /^\/contact$/,
-          /^\/details\/[^/]+$/, // Dynamic details/[id]
+          /^\/details\/[^/]+$/, 
           /^\/donate$/,
-          /^\/hindunogs$/,
+          /^\/hindungos$/,
           /^\/membership$/,
           /^\/temples$/,
           /^\/vision$/,
