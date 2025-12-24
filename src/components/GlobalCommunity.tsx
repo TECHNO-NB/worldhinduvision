@@ -23,7 +23,7 @@ const GlobalCommunity = () => {
           <video
             className="w-full object-cover"
             autoPlay
-                        loop
+            loop
             muted
             playsInline
           >

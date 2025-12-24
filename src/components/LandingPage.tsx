@@ -15,6 +15,7 @@ import JoinMisson from "./JoinMisson";
 import GalleryPage from "./GalleryPage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Promation from "./Promation";
 
 const WorldHinduVision: React.FC = () => {
   const router=useRouter()
@@ -106,9 +107,16 @@ const WorldHinduVision: React.FC = () => {
         <JoinMisson />
       </section>
 
+
+        <section id="contact">
+        <Promation />
+      </section>
+      
       <section id="contact">
         <ContactSection />
       </section>
+
+      
 
       <section id="footer">
         <Footer />
